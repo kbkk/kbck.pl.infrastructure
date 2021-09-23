@@ -10,10 +10,14 @@
 - `ts3` - TeamSpeak 3
 
 ### Deploy
-- `./deploy.sh`
+```shell
+# Fill in the env variables
+cp .example.env .env
+./deploy.sh
+```
 
 ### Operate
-```
+```shell
 # List stacks
 docker stack ls
 
