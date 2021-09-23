@@ -1,5 +1,33 @@
 version: "3.2"
 services:
+  swarm-cronjob:
+    image: crazymax/swarm-cronjob:1.10.0
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - "TZ=Europe/Warsaw"
+      - "LOG_LEVEL=info"
+      - "LOG_JSON=false"
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+  backup:
+    image: kbck/backup
+    environment:
+      - B2_BUCKET=${B2_BUCKET}
+      - B2_KEY_ID=${B2_KEY_ID}
+      - B2_APP_KEY=${B2_APP_KEY}
+    volumes:
+      - /home/ts3/data:/var/backups/ts3
+    deploy:
+      labels:
+        - "swarm.cronjob.enable=true"
+        - "swarm.cronjob.schedule=* * 1 * *"
+        - "swarm.cronjob.skip-running=true"
+      replicas: 0
+      restart_policy:
+        condition: none
   ts3:
     image: teamspeak:3.13.6
     environment:
