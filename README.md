@@ -5,10 +5,12 @@
 - Run `docker swarm init`
 
 ### Services
-- TeamSpeak 3
+- `swarm-cronjob` - [Swarm Cronjob](https://crazymax.dev/swarm-cronjob/usage/get-started/)
+- `backup` - Backup to BackBlaze (runs via cron, see `backup.Dockerfile`)
+- `ts3` - TeamSpeak 3
 
 ### Deploy
-- `docker stack deploy -c docker-compose.yml kbck`
+- `./deploy.sh`
 
 ### Operate
 ```
